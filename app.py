@@ -11,7 +11,7 @@ def mesaj_al():
         mesajlar.append(mesaj)
         return "Mesaj alındı"
     
-    # Mesajları telefonda göstermek için:
+
     html = """
     <h1>Gelen Mesajlar</h1>
     <ul>
