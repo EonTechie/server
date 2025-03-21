@@ -1,9 +1,23 @@
-from flask import Flask, request
+from flask import Flask, request, render_template_string
 
 app = Flask(__name__)
 
-@app.route("/", methods=["POST"])
+mesajlar = []
+
+@app.route("/", methods=["GET", "POST"])
 def mesaj_al():
-    data = request.form.get("mesaj")
-    print("Gelen mesaj:", data)
-    return f"Mesaj alındı: {data}"
+    if request.method == "POST":
+        mesaj = request.form.get("mesaj")
+        mesajlar.append(mesaj)
+        return "Mesaj alındı"
+    
+    # Mesajları telefonda göstermek için:
+    html = """
+    <h1>Gelen Mesajlar</h1>
+    <ul>
+        {% for m in mesajlar %}
+            <li>{{ m }}</li>
+        {% endfor %}
+    </ul>
+    """
+    return render_template_string(html, mesajlar=mesajlar)
